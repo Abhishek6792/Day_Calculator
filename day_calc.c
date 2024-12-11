@@ -1,3 +1,4 @@
+//Desmos: https://www.desmos.com/calculator/rvyg5whraq  alpha trial iterations here 
 #include <stdio.h>
 #include <math.h>
 

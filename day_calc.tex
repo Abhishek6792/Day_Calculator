@@ -1,0 +1,19 @@
+\documentclass[preview]{standalone}
+
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage[paperwidth=36.94cm, margin=0cm]{geometry}
+\begin{document}
+\pagecolor{black}
+\color{white}
+\vspace*{-.386cm} % Adjust this value to move the equation up or down
+
+\begin{equation*}
+D_{\text{ay}}(d,m,y) = \operatorname{mod}\left( d + 2\left(m-1\right)+\biggl\lfloor \frac{m}{2} \biggr\rfloor + \biggl\lfloor \frac{m-1}{8} \biggr\rfloor \operatorname{mod}(m,2) - \left\lceil \frac{m-2}{12} \right\rceil \left(2 - \frac{1 + \left(-1\right)^{\big\lceil \frac{\operatorname{mod}(y,4)}{4} \big\rceil}}{2} 
++ \left(1 - \frac{1 + \left(-1\right)^{\big\lceil \frac{\operatorname{mod}(y,400)}{400} \big\rceil}}{2}\right) \left(\frac{1 + \left(-1\right)^{\big\lceil \frac{\operatorname{mod}(y,100)}{100} \big\rceil}}{2}\right)\right) \\+ 5 \cdot \operatorname{mod}\left( \left\lfloor \frac{y-1}{100} \right\rfloor , 4 \right) + 5 \cdot \left\lfloor \frac{\operatorname{mod}(y-1, 100)}{4} \right\rfloor + \operatorname{mod}\left( \operatorname{mod}(y-1, 100), 4 \right), 7 \right)
+\end{equation*}
+
+\end{document}

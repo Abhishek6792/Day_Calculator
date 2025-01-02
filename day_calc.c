@@ -1,4 +1,3 @@
-//Desmos: https://www.desmos.com/calculator/rvyg5whraq  alpha trial iterations here 
 #include <stdio.h>
 #include <math.h>
 
@@ -6,11 +5,11 @@
 int day_cal(int d, int m, int y) {
     return (d + 2 * (m - 1) 
             + (int)floor(m / 2.0) 
-            + (int)floor((m - 1.0) / 8.0) * (m % 2) 
+            + (int)ceil((m - 8.0) / 12.0) * (m % 2) 
             - (int)ceil((m - 2.0) / 12.0) 
-            * (2 - ((1 + (int)pow(-1, (int)ceil((y % 4) / 4.0))) / 2) 
-            + (1 - (1 + (int)pow(-1, (int)ceil((y % 400) / 400.0))) / 2) 
-            * ((1 + (int)pow(-1, (int)ceil((y % 100) / 100.0))) / 2)) 
+            * (1 + (int)ceil((y % 4) / 4.0)
+            + (1 - (int)ceil((y % 100) / 100.0))
+            * (int)ceil((y % 400) / 400.0)) 
             + 5 * (((int)floor((y - 1.0) / 100.0)) % 4) 
             + 5 * (int)floor(((y - 1) % 100) / 4.0) 
             + (((y - 1) % 100) % 4)) % 7;

@@ -4,15 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Day of the Week Calculator</title>
+
+  <!-- MathJax v2 for automatic line breaking -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [["\\(","\\)"]], displayMath: [["\\[","\\]"]]},
+      "HTML-CSS": {
+        linebreaks: { automatic: true },
+        scale: 100
+      },
+      displayAlign: "center"
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_HTML" async></script>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      padding: 1rem;
       background-color: #f3f4f6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .card {
       background: white;
@@ -49,44 +66,57 @@
       font-weight: bold;
       font-size: 1.25rem;
     }
+    .equation-wrapper {
+      margin-top: 2rem;
+      width: 100%;
+      max-width: 100%;
+      background-color: white;
+      color: black;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      overflow-wrap: break-word;
+    }
+
+    .MathJax_Display {
+      overflow-x: auto;
+      overflow-wrap: break-word;
+      white-space: normal !important;
+      width: 100% !important;
+    }
   </style>
 </head>
 <body>
+
   <div class="card">
     <h2>Day of the Week Calculator</h2>
-    <input type="number" id="day" placeholder="Day" min="1" max="31" step="1" />
-    <input type="number" id="month" placeholder="Month" min="1" max="12" step="1" />
-    <input type="number" id="year" placeholder="Year" min="1" step="1" />
+    <input type="number" id="day" placeholder="Day" min="1" max="31" />
+    <input type="number" id="month" placeholder="Month" min="1" max="12" />
+    <input type="number" id="year" placeholder="Year" min="1" />
     <button onclick="calculateDay()">Calculate Day</button>
     <div id="result" class="result"></div>
   </div>
 
+  <div class="equation-wrapper">
+    \[
+    \begin{align*}
+    D_{\text{ay}}(d,m,y) =\ &\operatorname{mod}(d + 2(m-1) + \left\lfloor \frac{m}{2} \right\rfloor + \left\lceil \frac{m-8}{12} \right\rceil \cdot \operatorname{mod}(m,2) \\
+    & - \left\lceil \frac{m-2}{12} \right\rceil \cdot \left(1 + \left\lceil \frac{\operatorname{mod}(y,4)}{4} \right\rceil + \left(1 - \left\lceil \frac{\operatorname{mod}(y,100)}{100} \right\rceil \right) \cdot \left\lceil \frac{\operatorname{mod}(y,400)}{400} \right\rceil \right) \\
+    & + 5 \cdot \left(\operatorname{mod}\left( \left\lfloor \frac{y-1}{100} \right\rfloor , 4 \right) + \left\lfloor \frac{\operatorname{mod}(y-1, 100)}{4} \right\rfloor \right) + \operatorname{mod}\left( \operatorname{mod}(y-1, 100), 4 \right), 7)
+    \end{align*}
+    \]
+  </div>
+
   <script>
-    const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ];
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     function isValidDate(d, m, y) {
       if (!Number.isInteger(d) || !Number.isInteger(m) || !Number.isInteger(y)) return false;
-      if (d < 1 || m < 1 || y < 1) return false;
-      if (m > 12) return false;
+      if (d < 1 || m < 1 || y < 1 || m > 12) return false;
 
-      const daysInMonth = [
-        31, 28, 31, 30, 31, 30,
-        31, 31, 30, 31, 30, 31
-      ];
-
-      // Leap year check
+      const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
       if (m === 2 && ((y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0))) {
         daysInMonth[1] = 29;
       }
-
       return d <= daysInMonth[m - 1];
     }
 
@@ -114,13 +144,12 @@
       const y = parseInt(document.getElementById("year").value);
 
       if (!isValidDate(d, m, y)) {
-        document.getElementById("result").textContent = "Please enter a valid date with positive whole numbers.";
+        document.getElementById("result").textContent = "Please enter a valid date.";
         return;
       }
 
       const dayIndex = dayCal(d, m, y);
-      document.getElementById("result").textContent =
-        "That date is a " + daysOfWeek[dayIndex];
+      document.getElementById("result").textContent = "That date is a " + daysOfWeek[dayIndex];
     }
   </script>
 </body>
